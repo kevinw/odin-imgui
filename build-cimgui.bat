@@ -7,9 +7,9 @@
 if not exist external mkdir external
 pushd external
 
-set C_FILES=../cimgui/cimgui_auto.cpp
+set C_FILES=../cimgui/cimgui.cpp
 set I_FILES=../cimgui/imgui/imgui.cpp ../cimgui/imgui/imgui_draw.cpp ../cimgui/imgui/imgui_demo.cpp ../cimgui/imgui/imgui_widgets.cpp
-set OBJS=cimgui_auto.obj imgui.obj imgui_draw.obj imgui_demo.obj imgui_widgets.obj
+set OBJS=cimgui.obj imgui.obj imgui_draw.obj imgui_demo.obj imgui_widgets.obj
 set R_OPTIONS=/MT /c /O2 /nologo
 set D_OPTIONS=/MTd /c /Zi /nologo /Fd:cimgui_debug.pdb
 set DEFINES=/DCIMGUI_NO_EXPORT
