@@ -372,10 +372,10 @@ input_text           :: proc(label : string, buf : []u8, flags := Input_Text_Fla
 input_text_multiline :: proc(label : string, buf : []u8, size : Vec2, flags := Input_Text_Flags(0), callback : text_edit_callback = nil, user_data : rawptr = nil) -> bool { return im_input_text_multiline(_make_label_string(label), cstring(&buf[0]), uint(len(buf)), size, flags, callback, user_data); }
 
 input_float          :: proc{input_float1, input_float2, input_float3, input_float4};
-input_float1         :: proc(label : string, v : ^f32, step : f32 = 0, step_fast : f32 = 0, decimal_precision : i32 = -1, extra_flags := Input_Text_Flags(0)) -> bool          { return im_input_float(_make_label_string(label), v, step, step_fast, decimal_precision, extra_flags); }
-input_float2         :: proc(label : string, v : ^[2]f32, decimal_precision : i32 = -1, extra_flags := Input_Text_Flags(0)) -> bool                                            { return im_input_float2(_make_label_string(label), &v[0], decimal_precision, extra_flags); }
-input_float3         :: proc(label : string, v : ^[3]f32, decimal_precision : i32 = -1, extra_flags := Input_Text_Flags(0)) -> bool                                            { return im_input_float3(_make_label_string(label), &v[0], decimal_precision, extra_flags); }
-input_float4         :: proc(label : string, v : ^[4]f32, decimal_precision : i32 = -1, extra_flags := Input_Text_Flags(0)) -> bool                                            { return im_input_float4(_make_label_string(label), &v[0], decimal_precision, extra_flags); }
+input_float1         :: proc(label : string, v : ^f32, step : f32 = 0, step_fast : f32 = 0, format:cstring = "%.3f", extra_flags := Input_Text_Flags(0)) -> bool          { return im_input_float(_make_label_string(label), v, step, step_fast, format, extra_flags); }
+input_float2         :: proc(label : string, v : ^[2]f32, format:cstring = "%.3f", extra_flags := Input_Text_Flags(0)) -> bool                                            { return im_input_float2(_make_label_string(label), &v[0], format, extra_flags); }
+input_float3         :: proc(label : string, v : ^[3]f32, format:cstring = "%.3f", extra_flags := Input_Text_Flags(0)) -> bool                                            { return im_input_float3(_make_label_string(label), &v[0], format, extra_flags); }
+input_float4         :: proc(label : string, v : ^[4]f32, format:cstring = "%.3f", extra_flags := Input_Text_Flags(0)) -> bool                                            { return im_input_float4(_make_label_string(label), &v[0], format, extra_flags); }
 
 input_int            :: proc{input_int1, input_int2, input_int3, input_int4};
 input_int1           :: proc(label : string, v : ^i32, step : i32 = 0, step_fast : i32 = 0, extra_flags := Input_Text_Flags(0)) -> bool                                        { return im_input_int(_make_label_string(label), v, step, step_fast, extra_flags); }
@@ -387,10 +387,10 @@ input_int4           :: proc(label : string, v : ^[4]i32, extra_flags := Input_T
 foreign cimgui {
     @(link_name = "igInputText")          im_input_text           :: proc(label : cstring, buf : cstring, buf_size : uint /*size_t*/, flags : Input_Text_Flags, callback : text_edit_callback, user_data : rawptr) -> bool ---;
     @(link_name = "igInputTextMultiline") im_input_text_multiline :: proc(label : cstring, buf : cstring, buf_size : uint /*size_t*/, size : Vec2, flags : Input_Text_Flags, callback : text_edit_callback, user_data : rawptr) -> bool ---;
-    @(link_name = "igInputFloat")         im_input_float          :: proc(label : cstring, v : ^f32, step : f32, step_fast : f32, decimal_precision : i32, extra_flags : Input_Text_Flags) -> bool ---;
-    @(link_name = "igInputFloat2")        im_input_float2         :: proc(label : cstring, v : ^f32, decimal_precision : i32, extra_flags : Input_Text_Flags) -> bool ---;
-    @(link_name = "igInputFloat3")        im_input_float3         :: proc(label : cstring, v : ^f32, decimal_precision : i32, extra_flags : Input_Text_Flags) -> bool ---;
-    @(link_name = "igInputFloat4")        im_input_float4         :: proc(label : cstring, v : ^f32, decimal_precision : i32, extra_flags : Input_Text_Flags) -> bool ---;
+    @(link_name = "igInputFloat")         im_input_float          :: proc(label : cstring, v : ^f32, step : f32, step_fast : f32, format: cstring, extra_flags : Input_Text_Flags) -> bool ---;
+    @(link_name = "igInputFloat2")        im_input_float2         :: proc(label : cstring, v : ^f32, format: cstring, extra_flags : Input_Text_Flags) -> bool ---;
+    @(link_name = "igInputFloat3")        im_input_float3         :: proc(label : cstring, v : ^f32, format: cstring, extra_flags : Input_Text_Flags) -> bool ---;
+    @(link_name = "igInputFloat4")        im_input_float4         :: proc(label : cstring, v : ^f32, format: cstring, extra_flags : Input_Text_Flags) -> bool ---;
     @(link_name = "igInputInt")           im_input_int            :: proc(label : cstring, v : ^i32, step : i32, step_fast : i32, extra_flags : Input_Text_Flags) -> bool ---;
     @(link_name = "igInputInt2")          im_input_int2           :: proc(label : cstring, v : ^i32, extra_flags : Input_Text_Flags) -> bool ---;
     @(link_name = "igInputInt3")          im_input_int3           :: proc(label : cstring, v : ^i32, extra_flags : Input_Text_Flags) -> bool ---;
