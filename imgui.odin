@@ -152,7 +152,7 @@ foreign cimgui {
     @(link_name = "igGetScrollMaxY")                 get_scroll_max_y                   :: proc () -> f32 ---;
     @(link_name = "igSetScrollX")                    set_scroll_x                       :: proc (scroll_x : f32) ---;
     @(link_name = "igSetScrollY")                    set_scroll_y                       :: proc (scroll_y : f32) ---;
-    @(link_name = "igSetScrollHere")                 set_scroll_here                    :: proc (center_y_ratio : f32 = 0.5) ---;
+    @(link_name = "igSetScrollHereY")                 set_scroll_here_y                  :: proc (center_y_ratio : f32 = 0.5) ---;
     @(link_name = "igSetScrollFromPosY")             set_scroll_from_pos_y              :: proc (pos_y : f32, center_y_ratio : f32 = 0.5) ---;
     @(link_name = "igSetKeyboardFocusHere")          set_keyboard_focus_here            :: proc (offset : i32 = 0) ---;
     @(link_name = "igSetStateStorage")               set_state_storage                  :: proc (tree : ^Storage) ---;
@@ -161,8 +161,8 @@ foreign cimgui {
     // Parameters stacks (shared)
     @(link_name = "igPushFont")                      push_font                          :: proc (font : ^Font = nil) ---;
     @(link_name = "igPopFont")                       pop_font                           :: proc () ---;
-    @(link_name = "igPushStyleColorU32")             push_style_colorU32                :: proc (idx : Color, col : u32) ---;
-    @(link_name = "igPushStyleColor")                push_style_color_                  :: proc (idx : Color, col : Vec4) ---;
+    @(link_name = "igPushStyleColorU32")             push_style_colorU32                :: proc (idx : Style_Color, col : u32) ---;
+    @(link_name = "igPushStyleColor")                push_style_color_                  :: proc (idx : Style_Color, col : Vec4) ---;
 }
 
 push_style_color :: proc{push_style_color_, push_style_colorU32};
@@ -573,9 +573,9 @@ open_popup                 :: proc(str_id : string)                             
 open_popup_on_item_click   :: proc(str_id : string, mouse_button : int = 1) -> bool                         { return im_open_popup_on_item_click(_make_label_string(str_id), mouse_button) }
 begin_popup                :: proc(str_id : string) -> bool                                                 { return im_begin_popup(_make_label_string(str_id)); }
 begin_popup_modal          :: proc(name : string, open : ^bool = nil, extra_flags := Window_Flags(0)) -> bool   { return im_begin_popup_modal(_make_label_string(name), open, extra_flags); }
-begin_popup_context_item   :: proc(str_id : string, mouse_button : i32 = 1) -> bool                         { return im_begin_popup_context_item(_make_label_string(str_id), mouse_button); }
-begin_popup_context_window :: proc(also_over_items : bool, str_id : string, mouse_button : i32 = 1) -> bool { return im_begin_popup_context_window(also_over_items, _make_label_string(str_id), mouse_button); }
-begin_popup_context_void   :: proc(str_id : string, mouse_button : i32 = 1) -> bool                         { return im_begin_popup_context_void(_make_label_string(str_id), mouse_button); }
+begin_popup_context_item   :: proc(str_id : string = "", mouse_button : i32 = 1) -> bool                         { return im_begin_popup_context_item(_make_label_string(str_id), mouse_button); }
+begin_popup_context_window :: proc(str_id : string = "", mouse_button : i32 = 1, also_over_items := true) -> bool { return im_begin_popup_context_window(_make_label_string(str_id), mouse_button, also_over_items); }
+begin_popup_context_void   :: proc(str_id : string = "", mouse_button : i32 = 1) -> bool                         { return im_begin_popup_context_void(_make_label_string(str_id), mouse_button); }
 is_popup_open              :: proc(str_id : string) -> bool                                                 { return im_is_popup_open(_make_label_string(str_id)); }
 
 @(default_calling_convention="c")
@@ -585,7 +585,7 @@ foreign cimgui {
     @(link_name = "igBeginPopup")              im_begin_popup                :: proc(str_id : cstring) -> bool ---;
     @(link_name = "igBeginPopupModal")         im_begin_popup_modal          :: proc(name : cstring, p_open : ^bool, extra_flags : Window_Flags) -> bool ---;
     @(link_name = "igBeginPopupContextItem")   im_begin_popup_context_item   :: proc(str_id : cstring, mouse_button : i32) -> bool ---;
-    @(link_name = "igBeginPopupContextWindow") im_begin_popup_context_window :: proc(also_over_items : bool, str_id : cstring, mouse_button : i32) -> bool ---;
+    @(link_name = "igBeginPopupContextWindow") im_begin_popup_context_window :: proc(str_id : cstring, mouse_button : i32, also_over_items : bool) -> bool ---;
     @(link_name = "igBeginPopupContextVoid")   im_begin_popup_context_void   :: proc(str_id : cstring, mouse_button : i32) -> bool ---;
     @(link_name = "igEndPopup")                end_popup                     :: proc() ---;
     @(link_name = "igIsPopupOpen")             im_is_popup_open              :: proc(str_id : cstring) -> bool ---;
